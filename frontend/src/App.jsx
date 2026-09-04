@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import client from "./api/client.js";
 import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
 import { ToastProvider } from "./components/Toast.jsx";
@@ -26,6 +27,13 @@ const titles = {
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const pingBackend = () => client.get("/health").catch(() => undefined);
+    pingBackend();
+    const intervalId = setInterval(pingBackend, 5 * 60 * 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <ToastProvider>

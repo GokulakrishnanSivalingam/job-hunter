@@ -31,6 +31,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
+app.get("/api/helth", (_req, res) => res.json({ ok: true }));
 
 // Generic error handler
 app.use((err, _req, res, _next) => {
